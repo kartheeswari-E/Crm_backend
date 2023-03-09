@@ -29,11 +29,11 @@ const OrderSchema = mongoose.Schema({
 });
 const Order = mongoose.model('Order', OrderSchema);
 
-app.get('api/get-razorpay-key', (req, res) => {
+app.get('/get-razorpay-key', (req, res) => {
   res.send({ key: process.env.RAZORPAY_KEY_ID });
 });
 
-app.post('api/create-order', async (req, res) => {
+app.post('/create-order', async (req, res) => {
   try {
     const instance = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
@@ -51,7 +51,7 @@ app.post('api/create-order', async (req, res) => {
   }
 });
 
-app.post('api/pay-order', async (req, res) => {
+app.post('/pay-order', async (req, res) => {
   try {
     const { amount, razorpayPaymentId, razorpayOrderId, razorpaySignature } =
       req.body;
@@ -74,7 +74,7 @@ app.post('api/pay-order', async (req, res) => {
   }
 });
 
-app.get('api/list-orders', async (req, res) => {
+app.get('/list-orders', async (req, res) => {
   const orders = await Order.find();
   res.send(orders);
 });
